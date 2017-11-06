@@ -43,6 +43,10 @@ body{
       color: #fff
     }
 
+    .student-search input{
+        margin-right: 5px;
+    }
+
 .student-list{}
 
   .student-item{
@@ -102,6 +106,7 @@ body{
  
   .pagination li{
     display: inline;
+      padding-right: 5px;
   }
 
     .pagination li a{
