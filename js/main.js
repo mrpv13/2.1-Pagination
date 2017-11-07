@@ -18,6 +18,12 @@ const pagination = () => {
         }
         
     $('.pagination ul li:first a').addClass('active');
+    
+    $('.pagination a').on('click', (event) => {
+    $('.pagination ul li a[class="active"]').removeClass("active");
+    $(event.target).addClass("active");
+    showStudents($(event.target).text());
+});
 }
 
 const showStudents = (page) => {
@@ -29,7 +35,7 @@ const showStudents = (page) => {
     
     console.log(page);
 
-    //if key is empty (no search) show 10 at a time, else uses searchKey to show for search functionality
+    //if key is empty (no search) show 10 at a time, else uses searchKey for search functionality
     if (searchKey == ""){
         $('.student-list li').each(function(index, value){
             if ((index + 1) <= (page*10) && (index + 1) >= ((page*10)-9)){
@@ -40,9 +46,12 @@ const showStudents = (page) => {
         });
 
     }else{
+        let stuCount = 0;
+        
         $('.student-list li').each(function(index, value){
             if(($(value).find('h3').text()).includes(searchKey)){
-                if ((index + 1) <= (page*10) && (index + 1) >= ((page*10)-9)){
+                stuCount++;
+                if ((stuCount) <= (page*10) && (stuCount) >= ((page*10)-9)){
                     $(value).show();
                 }else{
                     $(value).hide();
@@ -54,6 +63,7 @@ const showStudents = (page) => {
     }
 }
 
+//search function, if empty then resets list, else assigns new searchKey and reloads list
 const search = () => {
     searchKey = $('#input-search').val();
     if (searchKey == ""){
@@ -82,20 +92,14 @@ const initPage = () => {
     
     //add search
     $('.page-header').append("<div class=\"student-search\"><input id=\"input-search\" placeholder=\"Search for students\"><button id=\"search-button\">Search</button></div>");
+    
+    
+    //adds search function to search button
+    $('#search-button').on('click', (event) => {
+        search();
+    });
 }
+
 
 //method call to load page
 initPage();
-
-//adds showStudents function to each pagination link
-$('.pagination a').on('click', (event) => {
-    $('.pagination ul li a[class="active"]').removeClass("active");
-    $(event.target).addClass("active");
-    showStudents($(event.target).text());
-});
-
-
-//adds search function to search button
-$('#search-button').on('click', (event) => {
-    search();
-});
