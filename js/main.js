@@ -16,6 +16,10 @@ const pagination = () => {
     for (let i = 1; i <= pagesTotal; i++){
             $('.pagination ul').append("<li><a href=\"#\">" + i + "</a></li>");
         }
+    
+    if($('.pagination ul').children().length == 1){
+        $('.pagination ul').empty();
+    }
         
     $('.pagination ul li:first a').addClass('active');
     
