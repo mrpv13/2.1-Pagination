@@ -34,9 +34,9 @@ const showStudents = (page) => {
     }
     
     console.log(page);
-
     //if key is empty (no search) show 10 at a time, else uses searchKey for search functionality
     if (searchKey == ""){
+        
         $('.student-list li').each(function(index, value){
             if ((index + 1) <= (page*10) && (index + 1) >= ((page*10)-9)){
                 $(value).show();
@@ -60,11 +60,18 @@ const showStudents = (page) => {
                 $(value).hide();                       
             }
         });
+        
+        if (stuCount == 0 && $('#no-results').length == 0){
+            $('.page-header').after("<p id=\"no-results\">No results found. Try again.</p>");
+        }else{
+            $('#no-results').remove();
+        }
     }
 }
 
 //search function, if empty then resets list, else assigns new searchKey and reloads list
 const search = () => {
+    $('#no-results').remove();
     searchKey = $('#input-search').val();
     if (searchKey == ""){
         studentTotal = $('.student-list li').length;
